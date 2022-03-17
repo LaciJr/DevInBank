@@ -56,12 +56,23 @@ namespace DevInBank.App.Entities
 
         public virtual void Transferencia(int valor, Conta contaDestino)
         {
-            saldo -= valor;
-            contaDestino.saldo += valor;
-            var temp = new Transacao("Transferencia Enviada", valor);
-            Extrato.Add(temp);
-            temp = new Transacao("Transferencia Recebida", valor);
-            contaDestino.Extrato.Add(temp);
+            if (VerificaFinalDeSemana())
+            {
+                Console.WriteLine("Transferência indisponível aos finais de semana.");
+            }
+            else if (NumConta == contaDestino.NumConta)
+            {
+                Console.WriteLine("Conta destino inválida.");
+            }
+            else
+            {
+                saldo -= valor;
+                contaDestino.saldo += valor;
+                var temp = new Transacao("Transferencia Enviada.", valor);
+                Extrato.Add(temp);
+                temp = new Transacao("Transferencia Recebida.", valor);
+                contaDestino.Extrato.Add(temp);
+            }
         }
 
         public virtual void AlterarDados(string nome, string endereco, decimal rendaMensal, string agencia)
@@ -88,6 +99,19 @@ namespace DevInBank.App.Entities
         public void AlterarDados(string nome)
         {
             Nome = nome;
+        }
+
+        static bool VerificaFinalDeSemana()
+        {
+            var data = DateTime.Now;
+            if ((data.DayOfWeek == DayOfWeek.Sunday) || (data.DayOfWeek == DayOfWeek.Saturday))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

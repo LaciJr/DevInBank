@@ -58,5 +58,17 @@ namespace DevInBank.App.Entities
                     break;
             }
         }
+
+        public override void Saque(decimal valor)
+        {
+            if (base.GetSaldo() > valor)
+            {
+                base.Saque(valor);
+            }
+            else
+            {
+                Console.WriteLine("Saldo Insuficiente.");
+            }
+        }
     }
 }

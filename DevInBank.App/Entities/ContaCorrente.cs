@@ -34,11 +34,7 @@ namespace DevInBank.App.Entities
 
         public override void Deposito(decimal valor)
         {
-            if (valor > (base.GetSaldo() + ChequeEspecial))
-            {
-                Console.WriteLine("Saldo insuficiente");
-            }
-            else
+            if (VerificaSaldoCheque(valor))
             {
                 base.Deposito(valor);
             }
@@ -46,11 +42,7 @@ namespace DevInBank.App.Entities
 
         public override void Saque(decimal valor)
         {
-            if (valor > (base.GetSaldo() + ChequeEspecial))
-            {
-                Console.WriteLine("Saldo insuficiente");
-            }
-            else
+            if (VerificaSaldoCheque(valor))
             {
                 base.Saque(valor);
             }
@@ -59,13 +51,22 @@ namespace DevInBank.App.Entities
 
         public override void Transferencia(int valor, Conta contaDestino)
         {
+            if (VerificaSaldoCheque(valor))
+            {
+                base.Transferencia(valor, contaDestino);
+            }
+        }
+
+        private bool VerificaSaldoCheque(decimal valor)
+        {
             if (valor > (base.GetSaldo() + ChequeEspecial))
             {
-                Console.WriteLine("Saldo insuficiente");
+                Console.WriteLine("Saldo insuficiente.");
+                return false;
             }
             else
             {
-                base.Transferencia(valor, contaDestino);
+                return true;
             }
         }
     }

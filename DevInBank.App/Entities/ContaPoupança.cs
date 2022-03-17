@@ -19,5 +19,17 @@ namespace DevInBank.App.Entities
             decimal rentabilidade = (decimal)Math.Pow(1 +(porcentagemDeRentabilidadeAnual / 100),tempoEmMeses);
             return saldo * rentabilidade;
         }
+
+        public override void Saque(decimal valor)
+        {
+            if(base.GetSaldo() > valor)
+            {
+                base.Saque(valor);
+            }
+            else
+            {
+                Console.WriteLine("Saldo Insuficiente.");
+            }
+        }
     }
 }
