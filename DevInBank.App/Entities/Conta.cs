@@ -17,6 +17,7 @@ namespace DevInBank.App.Entities
         private decimal saldo { get; set; }
         static int GeradorNumConta = 1000;
         public List<Transacao> Extrato { get; private set;}
+        public static List<Conta> ListaContas { get; }
 
         public Conta(string nome, string cpf, string endereco, decimal rendaMensal, string agencia)
         {

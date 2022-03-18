@@ -25,10 +25,5 @@ namespace DevInBank.App.Entities
             Valor = valor;
             Data = DateTime.Now;
         }
-
-        public void AdicionarNaLista(HistoricoTransferencia transferencia)
-        {
-            ListaHistoricoTransferencia.Add(transferencia);
-        }
     }
 }

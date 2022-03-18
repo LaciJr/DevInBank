@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DevInBank.App.Entities
 {
-    public class ContaPoupança : Conta
+    public class ContaPoupanca : Conta
     {
         public string TipoConta { get; } = "Conta Poupança";
-        public ContaPoupança(string nome, string cpf, string endereco, decimal rendaMensal, string agencia) : base(nome, cpf, endereco, rendaMensal, agencia)
+        public ContaPoupanca(string nome, string cpf, string endereco, decimal rendaMensal, string agencia) : base(nome, cpf, endereco, rendaMensal, agencia)
         {
         }
 
