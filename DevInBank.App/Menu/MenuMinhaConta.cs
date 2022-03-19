@@ -11,304 +11,96 @@ namespace DevInBank.App.Menu
     {
         public static void MinhaConta()
         {
-            Console.Clear();
+            Console.WriteLine("Selecione o tipo da sua conta:");
 
-            string seletor = "0";
-            while (seletor != "4")
+            var tipoConta = Utilitario.SelecionarContas();
+
+            switch (tipoConta)
             {
-                int i = 0;
-                Console.WriteLine($"{++i}. Conta Corrente");
-                Console.WriteLine($"{++i}. Conta Poupança");
-                Console.WriteLine($"{++i}. Conta Investimento");
-                Console.WriteLine($"{++i}. Voltar para o menu principal");
-                Console.WriteLine($"{++i}. Encerrar sessão");
-
-                seletor = Console.ReadLine();
-
-                switch (seletor)
-                {
-                    case "1":
-                        Console.Clear();
-                        MinhaContaCorrente();
-                        break;
-                    case "2":
-                        Console.Clear();
-                        MinhaContaPoupanca();
-                        break;
-                    case "3":
-                        Console.Clear();
-                        MinhaContaInvestimento();
-                        break;
-                    case "4":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "5":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine($"{seletor} não é uma opção válida");
-                        break;
-                }
+                case "1":
+                    MenuMinhaContaCorrente.MinhaContaCorrente();
+                    break;
+                case "2":
+                    MenuMinhaContaPoupanca.MinhaContaPoupanca();
+                    break;
+                case "3":
+                    MenuMinhaContaInvestimento.MinhaContaInvestimento();
+                    break;
+                default:
+                    Console.WriteLine("Tipo de conta inválida");
+                    break;
             }
         }
 
-        public static void MinhaContaCorrente()
-        {
-            string numConta;
-            Console.WriteLine("Informe o número da conta:");
-            numConta = Console.ReadLine();
-            var minhaConta = ContaCorrente.ListaContasCorrente.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            while (minhaConta == null)
-            {
-                numConta = ContaInválida();
-                minhaConta = ContaCorrente.ListaContasCorrente.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            }
-
-            string seletor = "0";
-            while (seletor != "1" || seletor != "5")
-            {
-                int i = 0;
-                Console.WriteLine($"{++i}. Saldo");
-                Console.WriteLine($"{++i}. Saque");
-                Console.WriteLine($"{++i}. Depósito");
-                Console.WriteLine($"{++i}. Transferência");
-                Console.WriteLine($"{++i}. Extrato");
-                Console.WriteLine($"{++i}. Saldo Cheque Especial");
-                Console.WriteLine($"{++i}. Alterar dados cadastrais");
-                Console.WriteLine($"{++i}. Voltar para o menu principal");
-                Console.WriteLine($"{++i}. Encerrar sessão");
-
-                seletor = Console.ReadLine();
-
-                switch (seletor)
-                {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine($"Saldo: R${minhaConta.GetSaldo()}");
-                        break;
-                    case "2":
-                        Console.Clear();
-                        Console.WriteLine("Insira o valor que deseja sacar:");
-                        string valor = Console.ReadLine();
-                        minhaConta.Saque(Convert.ToDecimal(valor));
-                        break;
-                    case "3":
-                        Console.Clear();
-                        Console.WriteLine("Insira o valor que deseja depositar:");
-                        valor = Console.ReadLine();
-                        minhaConta.Deposito(Convert.ToDecimal(valor));
-                        break;
-                    case "4":
-                        Console.Clear();
-                        Console.WriteLine("Insira o valor que deseja depositar:");
-                        valor = Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("Insira o número da conta destino:");
-                        string numContaDestino = Console.ReadLine();
-                        var contaDestino = Conta.ListaContas.Find(e => e.NumConta == Convert.ToInt32(numContaDestino));
-                        minhaConta.Transferencia(Convert.ToDecimal(valor), contaDestino);
-                        break;
-                    case "5":
-                        Console.Clear();
-                        minhaConta.GetExtrato();
-                        break;
-                    case "6":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "7":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "8":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    case "9":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine($"{seletor} não é uma opção válida");
-                        break;
-                }
-            }
-        }
-
-        public static void MinhaContaPoupanca()
-        {
-            string numConta;
-            Console.WriteLine("Informe o número da conta:");
-            numConta = Console.ReadLine();
-            var minhaConta = ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            while (minhaConta == null)
-            {
-                numConta = ContaInválida();
-                minhaConta = ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            }
-
-            string seletor = "0";
-            while (seletor != "1" || seletor != "5")
-            {
-                int i = 0;
-                Console.WriteLine($"{++i}. Saldo");
-                Console.WriteLine($"{++i}. Saque");
-                Console.WriteLine($"{++i}. Depósito");
-                Console.WriteLine($"{++i}. Transferência");
-                Console.WriteLine($"{++i}. Extrato");
-                Console.WriteLine($"{++i}. Simular Rendimento");
-                Console.WriteLine($"{++i}. Alterar dados cadastrais");
-                Console.WriteLine($"{++i}. Voltar para o menu principal");
-                Console.WriteLine($"{++i}. Encerrar sessão");
-
-                seletor = Console.ReadLine();
-
-                switch (seletor)
-                {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine($"Saldo: R${minhaConta.GetSaldo()}");
-                        break;
-                    case "2":
-                        Console.Clear();
-                        Console.WriteLine($"Saldo em conta: R${minhaConta.GetSaldo()}");
-                        break;
-                    case "3":
-                        Console.Clear();
-                        Console.WriteLine("Criando conta poupança");
-                        break;
-                    case "4":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "5":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "6":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "7":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "8":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    case "9":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine($"{seletor} não é uma opção válida");
-                        break;
-                }
-            }
-
-        }
-
-        public static void MinhaContaInvestimento()
-        {
-            string numConta;
-            Console.WriteLine("Informe o número da conta:");
-            numConta = Console.ReadLine();
-            var minhaConta = ContaInvestimento.ListaContasInvestimento.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            while (minhaConta == null)
-            {
-                numConta = ContaInválida();
-                minhaConta = ContaInvestimento.ListaContasInvestimento.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            }
-
-            string seletor = "0";
-            while (seletor != "1" || seletor != "5")
-            {
-                int i = 0;
-                Console.WriteLine($"{++i}. Saldo");
-                Console.WriteLine($"{++i}. Saque");
-                Console.WriteLine($"{++i}. Depósito");
-                Console.WriteLine($"{++i}. Transferência");
-                Console.WriteLine($"{++i}. Extrato");
-                Console.WriteLine($"{++i}. Simular Aplicação");
-                Console.WriteLine($"{++i}. Alterar dados cadastrais");
-                Console.WriteLine($"{++i}. Voltar para o menu principal");
-                Console.WriteLine($"{++i}. Encerrar sessão");
-
-                seletor = Console.ReadLine();
-
-                switch (seletor)
-                {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine($"Saldo: R${minhaConta.GetSaldo()}");
-                        break;
-                    case "2":
-                        Console.Clear();
-                        Console.WriteLine($"Saldo em conta: R${minhaConta.GetSaldo()}");
-                        break;
-                    case "3":
-                        Console.Clear();
-                        Console.WriteLine("Criando conta poupança");
-                        break;
-                    case "4":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "5":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "6":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "7":
-                        Console.Clear();
-                        MenuPrincipal.MenuInicial();
-                        break;
-                    case "8":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    case "9":
-                        Console.WriteLine("Encerrando aplicação...");
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine($"{seletor} não é uma opção válida");
-                        break;
-                }
-            }
-        }
-
-        static string ContaInválida()
+        public static void AlterarDadosCadastrais(Conta conta)
         {
             Console.Clear();
-            Console.WriteLine("Conta inválida!");
-            Console.WriteLine("Informe o número da conta ou 'x' para voltar ao menu principal:");
-            string numConta = Console.ReadLine();
 
-            if (numConta == "x" || numConta == "X")
+            string seletor = "0";
+            while (seletor != "5")
             {
-                Console.Clear();
-                MenuPrincipal.MenuInicial();
+                int i = 0;
+                Console.WriteLine("Qual dado você deseja alterar?");
+                Console.WriteLine($"{++i}. Nome");
+                Console.WriteLine($"{++i}. Endereço");
+                Console.WriteLine($"{++i}. Renda Mensal");
+                Console.WriteLine($"{++i}. Agencia");
+                Console.WriteLine($"{++i}. Voltar");
+                Console.WriteLine($"{++i}. Encerrar sessão");
+
+                seletor = Console.ReadLine();
+
+                var nome = conta.Nome;
+                var endereco = conta.Endereco;
+                var rendaMensal = conta.RendaMensal;
+                var agencia = conta.Agencia;
+
+                switch (seletor)
+                {
+                    case "1":
+                        Console.Clear();
+                        Console.WriteLine("Insira o novo nome:");
+                        nome = Console.ReadLine();
+                        conta.AlterarDados(nome);
+                        Console.WriteLine("Nome alterado.");
+                        Utilitario.OperacaoRealizada();
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.WriteLine("Insira o novo endereço:");
+                        endereco = Console.ReadLine();
+                        conta.AlterarDados(nome, endereco);
+                        Console.WriteLine("Endereço alterado.");
+                        Utilitario.OperacaoRealizada();
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.WriteLine("Insira a nova renda mensal:");
+                        rendaMensal = Convert.ToDecimal(Console.ReadLine());
+                        Console.WriteLine("Renda mensal alterada.");
+                        conta.AlterarDados(nome, endereco, rendaMensal);
+                        Utilitario.OperacaoRealizada();
+                        break;
+                    case "4":
+                        Console.Clear();
+                        agencia = Utilitario.SetAgencia();
+                        conta.AlterarDados(nome, endereco, rendaMensal, agencia);
+                        Console.WriteLine("Agencia alterada.");
+                        Utilitario.OperacaoRealizada();
+                        break;
+                    case "5":
+                        Console.Clear();
+                        break;
+                    case "6":
+                        Console.WriteLine("Encerrando aplicação...");
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine($"{seletor} não é uma opção válida");
+                        break;
+                }
             }
-
-            return numConta;
         }
-
     }
 }

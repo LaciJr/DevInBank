@@ -25,8 +25,8 @@ namespace DevInBank.App.Menu
                 switch (seletor)
                 {
                     case "1":
+                        Console.Clear();
                         MenuCriarConta.CriarConta();
-                        Console.WriteLine("1. Criar Conta");
                         break;
                     case "2":
                         Console.Clear();
