@@ -16,7 +16,7 @@ namespace DevInBank.App.Entities
         public string Agencia { get; private set; }
         private decimal saldo { get; set; }
         public string TipoConta { get; internal set; }
-        static int GeradorNumConta = 1000;
+        static int GeradorNumConta = 1;
         public List<Transacao> Extrato = new List<Transacao>();
         public static List<Conta> ListaContas = new List<Conta>();
 
@@ -36,6 +36,7 @@ namespace DevInBank.App.Entities
             saldo -= valor;
             var temp = new Transacao("Saque", valor);
             Extrato.Add(temp);
+            Console.WriteLine("Saque efetuado com sucesso.");
         }
 
         public virtual void Deposito(decimal valor)
@@ -43,6 +44,7 @@ namespace DevInBank.App.Entities
             saldo += valor;
             var temp = new Transacao("Deposito", valor);
             Extrato.Add(temp);
+            Console.WriteLine("Deposito efetuado com sucesso.");
         }
 
         public decimal GetSaldo()
@@ -61,13 +63,14 @@ namespace DevInBank.App.Entities
             }
         }
 
-        public virtual void Transferencia(decimal valor, Conta contaDestino)
+        public virtual void Transferencia(decimal valor, int numContaDestino)
         {
+            var contaDestino = ListaContas.Find(e => e.NumConta == numContaDestino);
             if (VerificaFinalDeSemana())
             {
                 Console.WriteLine("Transferência indisponível aos finais de semana.");
             }
-            else if (NumConta == contaDestino.NumConta)
+            else if ((NumConta == contaDestino.NumConta) || contaDestino == null)
             {
                 Console.WriteLine("Conta destino inválida.");
             }
@@ -79,10 +82,11 @@ namespace DevInBank.App.Entities
                 Extrato.Add(temp);
                 temp = new Transacao("Transferencia Recebida.", valor);
                 contaDestino.Extrato.Add(temp);
+                Console.WriteLine("Transferencia efetuada com sucesso.");
             }
         }
 
-        public virtual void AlterarDados(string nome, string endereco, decimal rendaMensal, string agencia)
+        public void AlterarDados(string nome, string endereco, decimal rendaMensal, string agencia)
         {
             Nome = nome;
             Endereco = endereco;
@@ -90,7 +94,7 @@ namespace DevInBank.App.Entities
             Agencia = agencia;
         }
 
-        public virtual void AlterarDados(string nome, string endereco, decimal rendaMensal)
+        public void AlterarDados(string nome, string endereco, decimal rendaMensal)
         {
             Nome = nome;
             Endereco = endereco;

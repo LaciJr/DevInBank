@@ -21,16 +21,9 @@ namespace DevInBank.App.Entities
             return ChequeEspecial;
         }
 
-        public override void AlterarDados(string nome, string endereco, decimal rendaMensal, string agencia)
+        public void SetChequeEspecial()
         {
-            base.AlterarDados(nome, endereco, rendaMensal, agencia);
-            ChequeEspecial = rendaMensal * 0.1m;
-        }
-
-        public override void AlterarDados(string nome, string endereco, decimal rendaMensal)
-        {
-            base.AlterarDados(nome, endereco, rendaMensal);
-            ChequeEspecial = rendaMensal * 0.1m;
+            ChequeEspecial = base.RendaMensal * 0.1m;
         }
 
         public override void Saque(decimal valor)
@@ -42,11 +35,11 @@ namespace DevInBank.App.Entities
 
         }
 
-        public override void Transferencia(decimal valor, Conta contaDestino)
+        public override void Transferencia(decimal valor, int numContaDestino)
         {
             if (VerificaSaldoCheque(valor))
             {
-                base.Transferencia(valor, contaDestino);
+                base.Transferencia(valor, numContaDestino);
             }
         }
 
