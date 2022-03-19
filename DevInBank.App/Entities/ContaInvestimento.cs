@@ -28,25 +28,32 @@ namespace DevInBank.App.Entities
 
         public void AplicarValor(decimal valor, int tempoEmMeses)
         {
-            if (base.GetSaldo() >= valor)
+            if (ValidaTempoAplicacao(tempoEmMeses))
             {
-                base.saldo -= valor;
-                ValorAplicado += valor;
-                var dataRetirada = DateTime.Now;
-                dataRetirada.AddMonths(tempoEmMeses);
-                var temp = new Transacao("Valor aplicado", valor, dataRetirada, tempoEmMeses);
-                base.Extrato.Add(temp);
-                Console.WriteLine("Valor aplicado com sucesso.");
+                if (base.GetSaldo() >= valor)
+                {
+                    base.saldo -= valor;
+                    ValorAplicado += valor;
+                    var dataRetirada = DateTime.Now;
+                    dataRetirada.AddMonths(tempoEmMeses);
+                    var temp = new Transacao("Valor aplicado", valor, dataRetirada, tempoEmMeses);
+                    base.Extrato.Add(temp);
+                    Console.WriteLine("Valor aplicado com sucesso.");
+                }
+                else
+                {
+                    Console.WriteLine("Saldo Insuficiente.");
+                }
             }
             else
             {
-                Console.WriteLine("Saldo Insuficiente.");
+                Console.WriteLine("Tempo não correpondente ao seu tipo de investimento (LCI, LCA, CDB)");
             }
         }
 
         public void RetirarValorAplicado()
         {
-            var valorAplicado = base.Extrato.FindAll(e => DateTime.Now > e.DataRetirada);
+            var valorAplicado = base.Extrato.FindAll(e => DateTime.Now >= e.DataRetirada);
             if (valorAplicado != null)
             {
                 foreach (var item in valorAplicado)
@@ -103,6 +110,24 @@ namespace DevInBank.App.Entities
             else
             {
                 Console.WriteLine("Saldo Insuficiente.");
+            }
+        }
+
+        private bool ValidaTempoAplicacao(int tempo)
+        {
+            switch (TipoInvest)
+            {
+                case "LCI":
+                    if (tempo >= 6) return true;
+                    else return false;
+                case "LCA":
+                    if (tempo >= 12) return true;
+                    else return false;
+                case "CDB":
+                    if (tempo >= 36) return true;
+                    else return false;
+                default:
+                    return false;
             }
         }
     }
