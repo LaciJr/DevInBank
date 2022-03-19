@@ -23,16 +23,44 @@ namespace DevInBank.App.Entities
         public decimal SimularValorAplicado(decimal valor, int tempoEmMeses)
         {
             var resultado = (valor * (decimal)Math.Pow(1 + (Rentabilidade/12), tempoEmMeses));
-            return resultado;
+            return resultado - valor;
         }
 
         public void AplicarValor(decimal valor, int tempoEmMeses)
         {
-            ValorAplicado = valor;
-            var dataRetirada = DateTime.Now;
-            dataRetirada.AddMonths(tempoEmMeses);
-            var temp = new Transacao("Aplicar valor", valor);
-            base.Extrato.Add(temp);
+            if (base.GetSaldo() >= valor)
+            {
+                base.saldo -= valor;
+                ValorAplicado += valor;
+                var dataRetirada = DateTime.Now;
+                dataRetirada.AddMonths(tempoEmMeses);
+                var temp = new Transacao("Valor aplicado", valor, dataRetirada, tempoEmMeses);
+                base.Extrato.Add(temp);
+                Console.WriteLine("Valor aplicado com sucesso.");
+            }
+            else
+            {
+                Console.WriteLine("Saldo Insuficiente.");
+            }
+        }
+
+        public void RetirarValorAplicado()
+        {
+            var valorAplicado = base.Extrato.FindAll(e => DateTime.Now > e.DataRetirada);
+            if (valorAplicado != null)
+            {
+                foreach (var item in valorAplicado)
+                {
+                    base.Extrato.Remove(item);
+                    base.saldo += (item.Valor * (decimal)Math.Pow(1 + (Rentabilidade / 12), item.TempoMeses));
+                    var temp = new Transacao("Aplicação retirada", item.Valor);
+                    base.Extrato.Add(temp);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Nenhuma aplicação disponível para retirada");
+            }
         }
 
         private void SetRentabilidade()
@@ -56,7 +84,7 @@ namespace DevInBank.App.Entities
 
         public override void Saque(decimal valor)
         {
-            if (base.GetSaldo() > valor)
+            if (base.GetSaldo() >= valor)
             {
                 base.Saque(valor);
             }
@@ -68,7 +96,7 @@ namespace DevInBank.App.Entities
 
         public override void Transferencia(decimal valor, int numContaDestino)
         {
-            if (base.GetSaldo() > valor)
+            if (base.GetSaldo() >= valor)
             {
                 base.Transferencia(valor, numContaDestino);
             }

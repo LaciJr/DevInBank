@@ -14,7 +14,7 @@ namespace DevInBank.App.Entities
         public decimal RendaMensal { get; private set; }
         public int NumConta { get; private set; }
         public string Agencia { get; private set; }
-        private decimal saldo { get; set; }
+        private protected decimal saldo { get; set; }
         public string TipoConta { get; internal set; }
         static int GeradorNumConta = 1;
         public List<Transacao> Extrato = new List<Transacao>();

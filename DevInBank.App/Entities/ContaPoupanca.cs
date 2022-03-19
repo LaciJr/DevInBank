@@ -25,7 +25,7 @@ namespace DevInBank.App.Entities
 
         public override void Saque(decimal valor)
         {
-            if(base.GetSaldo() > valor)
+            if(base.GetSaldo() >= valor)
             {
                 base.Saque(valor);
             }
@@ -37,7 +37,7 @@ namespace DevInBank.App.Entities
 
         public override void Transferencia(decimal valor, int numContaDestino)
         {
-            if (base.GetSaldo() > valor)
+            if (base.GetSaldo() >= valor)
             {
                 base.Transferencia(valor, numContaDestino);
             }

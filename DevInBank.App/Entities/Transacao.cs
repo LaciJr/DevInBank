@@ -11,12 +11,23 @@ namespace DevInBank.App.Entities
         public string Tipo { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime Data { get; private set; }
+        public DateTime DataRetirada { get; private set; }
 
+        public int TempoMeses { get; private set; }
         public Transacao(string tipo, decimal valor)
         {
             Tipo = tipo;
             Valor = valor;
             Data = DateTime.Now;
+        }
+
+        public Transacao(string tipo, decimal valor, DateTime dataRetirada, int tempo)
+        {
+            Tipo = tipo;
+            Valor = valor;
+            Data = DateTime.Now;
+            DataRetirada = dataRetirada;
+            TempoMeses = tempo;
         }
     }
 }
