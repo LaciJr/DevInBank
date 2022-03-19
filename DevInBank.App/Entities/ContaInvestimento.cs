@@ -8,14 +8,16 @@ namespace DevInBank.App.Entities
 {
     public class ContaInvestimento : Conta
     {
-        public string TipoConta { get; } = "Conta Investimento";
         public string TipoInvest { get; private set; }
         public decimal ValorAplicado { get; private set; }
         public double Rentabilidade { get; private set; }
+        public static List<ContaInvestimento> ListaContasInvestimento = new List<ContaInvestimento>();
+
         public ContaInvestimento(string nome, string cpf, string endereco, decimal rendaMensal, string agencia, string tipoInvest) : base(nome, cpf, endereco, rendaMensal, agencia)
         {
             TipoInvest = tipoInvest;
             SetRentabilidade();
+            base.TipoConta = "Conta Investimento";
         }
 
         public decimal SimularValorAplicado(decimal valor, int tempoEmMeses)
@@ -29,7 +31,7 @@ namespace DevInBank.App.Entities
             ValorAplicado = valor;
             var dataRetirada = DateTime.Now;
             dataRetirada.AddMonths(tempoEmMeses);
-            var temp = new Transacao("Aplicar valor", valor, dataRetirada);
+            var temp = new Transacao("Aplicar valor", valor);
             base.Extrato.Add(temp);
         }
 
@@ -64,6 +66,18 @@ namespace DevInBank.App.Entities
             if (base.GetSaldo() > valor)
             {
                 base.Saque(valor);
+            }
+            else
+            {
+                Console.WriteLine("Saldo Insuficiente.");
+            }
+        }
+
+        public override void Transferencia(decimal valor, Conta contaDestino)
+        {
+            if (base.GetSaldo() > valor)
+            {
+                base.Transferencia(valor, contaDestino);
             }
             else
             {

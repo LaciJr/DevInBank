@@ -8,11 +8,12 @@ namespace DevInBank.App.Entities
 {
     public class ContaCorrente : Conta
     {
-        public string TipoConta { get; } = "Conta Corrente";
         private decimal ChequeEspecial { get; set; }
+        public static List<ContaCorrente> ListaContasCorrente = new List<ContaCorrente>();
         public ContaCorrente(string nome, string cpf, string endereco, decimal rendaMensal, string agencia) : base(nome, cpf, endereco, rendaMensal, agencia)
         {
             ChequeEspecial = rendaMensal * 0.1m;
+            base.TipoConta = "Conta Corrente";
         }
 
         public decimal GetChequeEspecial()
@@ -32,14 +33,6 @@ namespace DevInBank.App.Entities
             ChequeEspecial = rendaMensal * 0.1m;
         }
 
-        public override void Deposito(decimal valor)
-        {
-            if (VerificaSaldoCheque(valor))
-            {
-                base.Deposito(valor);
-            }
-        }
-
         public override void Saque(decimal valor)
         {
             if (VerificaSaldoCheque(valor))
@@ -49,7 +42,7 @@ namespace DevInBank.App.Entities
 
         }
 
-        public override void Transferencia(int valor, Conta contaDestino)
+        public override void Transferencia(decimal valor, Conta contaDestino)
         {
             if (VerificaSaldoCheque(valor))
             {

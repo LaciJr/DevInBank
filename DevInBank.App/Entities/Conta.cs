@@ -15,9 +15,10 @@ namespace DevInBank.App.Entities
         public int NumConta { get; private set; }
         public string Agencia { get; private set; }
         private decimal saldo { get; set; }
+        public string TipoConta { get; internal set; }
         static int GeradorNumConta = 1000;
-        public List<Transacao> Extrato { get; private set;}
-        public static List<Conta> ListaContas { get; }
+        public List<Transacao> Extrato = new List<Transacao>();
+        public static List<Conta> ListaContas = new List<Conta>();
 
         public Conta(string nome, string cpf, string endereco, decimal rendaMensal, string agencia)
         {
@@ -49,13 +50,18 @@ namespace DevInBank.App.Entities
             return saldo;
         }
 
-        public string GetExtrato()
+        public void GetExtrato()
         {
-            var ExtratoStr = Extrato.ToString();
-            return ExtratoStr;
+            foreach (var item in Extrato)
+            {
+                Console.WriteLine(item.Tipo);
+                Console.WriteLine($"R${item.Valor}");
+                Console.WriteLine(item.Data);
+                Console.WriteLine("---------------");
+            }
         }
 
-        public virtual void Transferencia(int valor, Conta contaDestino)
+        public virtual void Transferencia(decimal valor, Conta contaDestino)
         {
             if (VerificaFinalDeSemana())
             {
