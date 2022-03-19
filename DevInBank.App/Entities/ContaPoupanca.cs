@@ -18,8 +18,9 @@ namespace DevInBank.App.Entities
         public decimal SimularRendimento(int tempoEmMeses, double porcentagemDeRentabilidadeAnual)
         {
             var saldo = GetSaldo();
-            decimal rentabilidade = (decimal)Math.Pow(1 +(porcentagemDeRentabilidadeAnual / 100),tempoEmMeses);
-            return saldo * rentabilidade;
+            decimal rentabilidade = (decimal)Math.Pow(1 +((porcentagemDeRentabilidadeAnual / 100)/12),tempoEmMeses);
+            var saldoFinal = saldo * rentabilidade;
+            return saldoFinal;
         }
 
         public override void Saque(decimal valor)
@@ -34,11 +35,11 @@ namespace DevInBank.App.Entities
             }
         }
 
-        public override void Transferencia(decimal valor, Conta contaDestino)
+        public override void Transferencia(decimal valor, int numContaDestino)
         {
             if (base.GetSaldo() > valor)
             {
-                base.Transferencia(valor, contaDestino);
+                base.Transferencia(valor, numContaDestino);
             }
             else
             {

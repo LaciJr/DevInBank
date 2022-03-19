@@ -22,7 +22,7 @@ namespace DevInBank.App.Entities
 
         public decimal SimularValorAplicado(decimal valor, int tempoEmMeses)
         {
-            var resultado = (valor * (decimal)Math.Pow(1 + (Rentabilidade/100), tempoEmMeses));
+            var resultado = (valor * (decimal)Math.Pow(1 + (Rentabilidade/12), tempoEmMeses));
             return resultado;
         }
 
@@ -35,25 +35,18 @@ namespace DevInBank.App.Entities
             base.Extrato.Add(temp);
         }
 
-        public void AlterarDados(string nome, string endereco, decimal rendaMensal, string agencia, string tipoInvest)
-        {
-            base.AlterarDados(nome, endereco, rendaMensal, agencia);
-            TipoInvest = tipoInvest;
-            SetRentabilidade();
-        }
-
         private void SetRentabilidade()
         {
             switch (TipoInvest)
             {
                 case "LCI":
-                    Rentabilidade = 8;
+                    Rentabilidade = 0.08;
                     break;
                 case "LCA":
-                    Rentabilidade = 9;
+                    Rentabilidade = 0.09;
                     break;
                 case "CDB":
-                    Rentabilidade = 10;
+                    Rentabilidade = 0.1;
                     break;
                 default:
                     Console.WriteLine("Tipo de conta investimento inválida.");
@@ -73,11 +66,11 @@ namespace DevInBank.App.Entities
             }
         }
 
-        public override void Transferencia(decimal valor, Conta contaDestino)
+        public override void Transferencia(decimal valor, int numContaDestino)
         {
             if (base.GetSaldo() > valor)
             {
-                base.Transferencia(valor, contaDestino);
+                base.Transferencia(valor, numContaDestino);
             }
             else
             {
