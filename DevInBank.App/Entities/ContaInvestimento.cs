@@ -8,14 +8,14 @@ namespace DevInBank.App.Entities
 {
     public class ContaInvestimento : Conta
     {
-        public string TipoInvest { get; private set; }
+        public string TipoInvestimento { get; private set; }
         public decimal ValorAplicado { get; private set; }
         public double Rentabilidade { get; private set; }
         public static List<ContaInvestimento> ListaContasInvestimento = new List<ContaInvestimento>();
 
         public ContaInvestimento(string nome, string cpf, string endereco, decimal rendaMensal, string agencia, string tipoInvest) : base(nome, cpf, endereco, rendaMensal, agencia)
         {
-            TipoInvest = tipoInvest;
+            TipoInvestimento = tipoInvest;
             SetRentabilidade();
             base.TipoConta = "Conta Investimento";
         }
@@ -72,7 +72,7 @@ namespace DevInBank.App.Entities
 
         private void SetRentabilidade()
         {
-            switch (TipoInvest)
+            switch (TipoInvestimento)
             {
                 case "LCI":
                     Rentabilidade = 0.08;
@@ -115,7 +115,7 @@ namespace DevInBank.App.Entities
 
         private bool ValidaTempoAplicacao(int tempo)
         {
-            switch (TipoInvest)
+            switch (TipoInvestimento)
             {
                 case "LCI":
                     if (tempo >= 6) return true;
