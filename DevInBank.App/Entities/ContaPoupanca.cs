@@ -19,7 +19,7 @@ namespace DevInBank.App.Entities
         {
             var saldo = base.Saldo;
             decimal rentabilidade = (decimal)Math.Pow(1 +((porcentagemDeRentabilidadeAnual / 100)/12),tempoEmMeses);
-            var saldoFinal = saldo * rentabilidade;
+            var saldoFinal = Math.Round(saldo * rentabilidade, 2);
             return saldoFinal;
         }
 

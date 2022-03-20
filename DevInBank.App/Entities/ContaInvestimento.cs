@@ -22,7 +22,7 @@ namespace DevInBank.App.Entities
 
         public decimal SimularValorAplicado(decimal valor, int tempoEmMeses)
         {
-            var resultado = (valor * (decimal)Math.Pow(1 + (Rentabilidade/12), tempoEmMeses));
+            var resultado = Math.Round((valor * (decimal)Math.Pow(1 + (Rentabilidade/12), tempoEmMeses)),2);
             return resultado - valor;
         }
 
@@ -60,9 +60,10 @@ namespace DevInBank.App.Entities
                 foreach (var item in aplicacoesDisponiveis)
                 {
                     base.Extrato.Remove(item);
-                    base.Saldo += (item.Valor * (decimal)Math.Pow(1 + (Rentabilidade / 12), item.TempoMeses));
+                    var valorRetirado = Math.Round((item.Valor * (decimal)Math.Pow(1 + (Rentabilidade / 12), item.TempoMeses)), 2);
+                    base.Saldo += valorRetirado;
                     ValorAplicado -= item.Valor;
-                    var temp = new Transacao("Aplicação retirada", item.Valor);
+                    var temp = new Transacao("Aplicação retirada", valorRetirado);
                     base.Extrato.Add(temp);
                     
                 }
