@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevInBank.App.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -172,6 +173,16 @@ namespace DevInBank.App.Menu
 
             return true;
 
+        }
+
+        public static string VerificaExisteConta(int numConta)
+        {
+            string tipoConta = "";
+            if (ContaCorrente.ListaContasCorrente.Find(e => e.NumConta == Convert.ToInt32(numConta)) != null) tipoConta = "Conta Corrente";
+            if (ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta)) != null) tipoConta = "Conta Poupança";
+            if (ContaInvestimento.ListaContasInvestimento.Find(e => e.NumConta == Convert.ToInt32(numConta)) != null) tipoConta = "Conta Investimento";
+
+            return tipoConta;
         }
     }
 }

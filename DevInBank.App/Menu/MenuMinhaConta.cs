@@ -11,20 +11,30 @@ namespace DevInBank.App.Menu
     {
         public static void MinhaConta()
         {
-            Console.WriteLine("Selecione o tipo da sua conta:");
+            string numConta;
+            Console.WriteLine("Informe o número da conta:");
+            numConta = Console.ReadLine();
 
-            var tipoConta = Utilitario.SelecionarContas();
+            if (numConta == "") numConta = "0";
+
+            var tipoConta = Utilitario.VerificaExisteConta(Convert.ToInt32(numConta));
+            while (tipoConta == "")
+            {
+                numConta = Utilitario.ContaInvalida();
+                if (numConta == "") numConta = "0";
+                tipoConta = Utilitario.VerificaExisteConta(Convert.ToInt32(numConta));
+            }
 
             switch (tipoConta)
             {
-                case "1":
-                    MenuMinhaContaCorrente.MinhaContaCorrente();
+                case "Conta Corrente":
+                    MenuMinhaContaCorrente.MinhaContaCorrente(ContaCorrente.ListaContasCorrente.Find(e => e.NumConta == Convert.ToInt32(numConta)));
                     break;
-                case "2":
-                    MenuMinhaContaPoupanca.MinhaContaPoupanca();
+                case "Conta Poupança":
+                    MenuMinhaContaPoupanca.MinhaContaPoupanca(ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta)));
                     break;
-                case "3":
-                    MenuMinhaContaInvestimento.MinhaContaInvestimento();
+                case "Conta Investimento":
+                    MenuMinhaContaInvestimento.MinhaContaInvestimento(ContaInvestimento.ListaContasInvestimento.Find(e => e.NumConta == Convert.ToInt32(numConta)));
                     break;
                 default:
                     Console.WriteLine("Tipo de conta inválida");

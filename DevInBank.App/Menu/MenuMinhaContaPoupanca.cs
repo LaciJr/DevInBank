@@ -9,23 +9,12 @@ namespace DevInBank.App.Menu
 {
     public class MenuMinhaContaPoupanca
     {
-        public static void MinhaContaPoupanca()
+        public static void MinhaContaPoupanca(ContaPoupanca minhaConta)
         {
-            string numConta;
-            Console.WriteLine("Informe o número da conta:");
-            numConta = Console.ReadLine();
-            var minhaConta = ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            while (minhaConta == null)
-            {
-                numConta = Utilitario.ContaInvalida();
-                minhaConta = ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta));
-
-            }
-
             string seletor = "0";
             while (seletor != "8")
             {
+                Console.WriteLine("Minha Conta Poupança");
                 int i = 0;
                 Console.WriteLine($"{++i}. Saldo");
                 Console.WriteLine($"{++i}. Saque");
@@ -67,7 +56,18 @@ namespace DevInBank.App.Menu
                         Console.Clear();
                         Console.WriteLine("Insira o número da conta destino:");
                         string numContaDestino = Console.ReadLine();
-                        minhaConta.Transferencia(Convert.ToDecimal(valorTransferencia), Convert.ToInt32(numContaDestino));
+
+                        if (numContaDestino == "") numContaDestino = "0";
+
+                        var verifica = Utilitario.VerificaExisteConta(Convert.ToInt32(numContaDestino));
+                        while (verifica == "")
+                        {
+                            numContaDestino = Utilitario.ContaInvalida();
+                            if (numContaDestino == "") numContaDestino = "0";
+                            verifica = Utilitario.VerificaExisteConta(Convert.ToInt32(numContaDestino));
+                        }
+
+                        minhaConta.Transferencia(Convert.ToDecimal(valorTransferencia), Convert.ToInt32(numContaDestino), minhaConta);
                         Utilitario.OperacaoRealizada();
                         break;
                     case "5":
