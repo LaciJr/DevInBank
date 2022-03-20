@@ -43,6 +43,7 @@ namespace DevInBank.App.Menu
                         Console.Clear();
                         DataSistema.SetData();
                         Utilitario.UpdateSaldos();
+                        MenuInicial();
                         break;
                     case "5":
                         Console.WriteLine("Encerrando aplicação...");

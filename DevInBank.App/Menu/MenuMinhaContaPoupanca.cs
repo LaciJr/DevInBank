@@ -15,6 +15,7 @@ namespace DevInBank.App.Menu
             string seletor = "0";
             while (seletor != "8")
             {
+                Console.WriteLine($"Bem vindo(a)! {minhaConta.Nome}");
                 Console.WriteLine("Minha Conta Poupança");
                 var i = MenuEnum.i;
                 Console.WriteLine($"{++i}. Saldo");

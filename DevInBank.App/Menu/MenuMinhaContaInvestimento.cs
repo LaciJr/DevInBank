@@ -15,10 +15,10 @@ namespace DevInBank.App.Menu
             string seletor = "0";
             while (seletor != "8")
             {
+                Console.WriteLine($"Bem vindo(a)! {minhaConta.Nome}");
                 Console.WriteLine("Minha Conta Investimento");
                 var i = MenuEnum.i;
-                Console.WriteLine($"{i}. Saldo");
-                Console.WriteLine($"{++i}. Retirar valor aplicado");
+                Console.WriteLine($"{++i}. Saldo");
                 Console.WriteLine($"{++i}. Saque");
                 Console.WriteLine($"{++i}. Depósito");
                 Console.WriteLine($"{++i}. Transferência");
@@ -32,15 +32,10 @@ namespace DevInBank.App.Menu
 
                 switch (seletor)
                 {
-                    case "0":
+                    case "1":
                         Console.Clear();
                         Console.WriteLine($"Saldo: R${minhaConta.GetSaldo()}");
                         Console.WriteLine($"Valor aplicado: R${minhaConta.ValorAplicado}");
-                        Utilitario.OperacaoRealizada();
-                        break;
-                    case "1":
-                        Console.Clear();
-                        minhaConta.RetirarValorAplicado();
                         Utilitario.OperacaoRealizada();
                         break;
                     case "2":

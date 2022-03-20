@@ -29,12 +29,15 @@ namespace DevInBank.App.Menu
             switch (tipoConta)
             {
                 case "Conta Corrente":
+                    Console.Clear();
                     MenuMinhaContaCorrente.MinhaContaCorrente(ContaCorrente.ListaContasCorrente.Find(e => e.NumConta == Convert.ToInt32(numConta)));
                     break;
                 case "Conta Poupança":
+                    Console.Clear();
                     MenuMinhaContaPoupanca.MinhaContaPoupanca(ContaPoupanca.ListaContasPoupanca.Find(e => e.NumConta == Convert.ToInt32(numConta)));
                     break;
                 case "Conta Investimento":
+                    Console.Clear();
                     MenuMinhaContaInvestimento.MinhaContaInvestimento(ContaInvestimento.ListaContasInvestimento.Find(e => e.NumConta == Convert.ToInt32(numConta)));
                     break;
                 default:

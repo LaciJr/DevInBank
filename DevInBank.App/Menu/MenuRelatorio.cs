@@ -85,6 +85,7 @@ namespace DevInBank.App.Menu
         static void ListarContas()
         {
             Console.WriteLine("CONTAS CADASTRADAS");
+            Console.WriteLine("---------------------------------");
 
             foreach (var item in Conta.ListaContas)
             {
@@ -92,13 +93,14 @@ namespace DevInBank.App.Menu
                 Console.WriteLine($"Número: {item.NumConta}");
                 Console.WriteLine($"Titular: {item.Nome}");
                 Console.WriteLine($"Agencia: {item.Agencia}");
-                Console.WriteLine("-----------------------------");
+                Console.WriteLine("---------------------------------");
             }
         }
 
         static void ListarContasNegativas()
         {
             Console.WriteLine("CONTAS COM SALDO NEGATIVO");
+            Console.WriteLine("---------------------------------");
 
             var contasNegativas = Conta.ListaContas.FindAll(e => e.GetSaldo() < 0);
 
@@ -108,7 +110,7 @@ namespace DevInBank.App.Menu
                 Console.WriteLine($"Número: {item.NumConta}");
                 Console.WriteLine($"Titular: {item.Nome}");
                 Console.WriteLine($"Agencia: {item.Agencia}");
-                Console.WriteLine("-----------------------------");
+                Console.WriteLine("---------------------------------");
             }
         }
     }
