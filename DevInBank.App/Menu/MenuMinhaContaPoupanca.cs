@@ -81,11 +81,13 @@ namespace DevInBank.App.Menu
                         Console.Clear();
                         Console.WriteLine("Insira a quantidade de tempo em meses:");
                         string tempoMeses = Console.ReadLine();
+                       
                         Console.Clear();
                         Console.WriteLine("Insira a rentabilidade anual da conta poupança em % (exemplo: 8):");
                         string rentabilidadePoupanca = Console.ReadLine();
+                       
                         Console.Clear();
-                        Console.WriteLine($"De acordo com seu saldo atual, no final dos {tempoMeses} meses você terá R${minhaConta.SimularRendimento(Convert.ToInt32(tempoMeses), Convert.ToDouble(rentabilidadePoupanca))}");
+                        Console.WriteLine($"De acordo com seu saldo atual R${minhaConta.GetSaldo()}, no final dos {tempoMeses} meses você terá R${minhaConta.SimularRendimento(Convert.ToInt32(tempoMeses), Convert.ToDouble(rentabilidadePoupanca))}");
                         Utilitario.OperacaoRealizada();
                         break;
                     case "7":

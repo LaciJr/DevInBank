@@ -82,14 +82,23 @@ namespace DevInBank.App.Menu
                         Console.Clear();
                         Console.WriteLine("Insira a quantidade de tempo em meses:");
                         string tempoMeses = Console.ReadLine();
+                        
                         Console.Clear();
                         Console.WriteLine("Insira o valor da aplicação:");
                         string valorAplicado = Console.ReadLine();
+                        
                         var rendimento = minhaConta.SimularValorAplicado(Convert.ToDecimal(valorAplicado), Convert.ToInt32(tempoMeses));
-                        Console.WriteLine($"Após {tempoMeses} meses, o valor aplicado terá rendido R${rendimento} e você poderá retirar o total de R${Convert.ToDecimal(valorAplicado) + rendimento}");
+                        Console.WriteLine($"Após {tempoMeses} meses, o valor aplicado terá rendido R${rendimento} e você receberá o total de R${Convert.ToDecimal(valorAplicado) + rendimento}");
+                        
                         Console.WriteLine("Digite 1 para aplicar este valor ou qualquer tecla para sair. O valor será debitado automaticamente do seu saldo atual.");
                         string verificador = Console.ReadLine();
-                        if (verificador == "1") { minhaConta.AplicarValor(Convert.ToDecimal(valorAplicado), Convert.ToInt32(tempoMeses)); Utilitario.OperacaoRealizada(); }
+                        
+                        if (verificador == "1") 
+                        { 
+                            minhaConta.AplicarValor(Convert.ToDecimal(valorAplicado), Convert.ToInt32(tempoMeses)); 
+                            Utilitario.OperacaoRealizada(); 
+                        }
+
                         Console.Clear();
                         break;
                     case "7":
