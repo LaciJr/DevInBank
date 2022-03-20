@@ -6,24 +6,35 @@ using System.Threading.Tasks;
 
 namespace DevInBank.App.Entities
 {
-    public class HistoricoTransferencia
+    public class HistoricoTransferencia : Transacao
     {
         public Conta ContaOrigem { get; private set; }
         public Conta ContaDestino { get; private set; }
-        public decimal Valor { get; private set; }
-        public DateTime Data { get; private set; }
-        public int IdTransacao { get; private set; }
-        static int GeradorIdTransacao = 001;
         public static List<HistoricoTransferencia> ListaHistoricoTransferencia { get; private set; } = new List<HistoricoTransferencia>();
 
-        public HistoricoTransferencia(Conta contaOrigem, Conta contaDestino, decimal valor)
+        public HistoricoTransferencia(string tipo, decimal valor, Conta contaOrigem, Conta contaDestino) : base(tipo, valor)
         {
-            IdTransacao = GeradorIdTransacao;
-            GeradorIdTransacao++;
             ContaOrigem = contaOrigem;
             ContaDestino = contaDestino;
-            Valor = valor;
-            Data = DateTime.Now;
+        }
+
+        public static void GetHistoricoTransferencia()
+        {
+            foreach (var item in ListaHistoricoTransferencia)
+            {
+                Console.WriteLine("CONTA DE ORIGEM");
+                Console.WriteLine(item.ContaOrigem.TipoConta);
+                Console.WriteLine($"Número da conta: {item.ContaOrigem.NumConta}");
+                Console.WriteLine($"titular: {item.ContaOrigem.Nome}");
+                Console.WriteLine("CONTA DESTINO");
+                Console.WriteLine(item.ContaDestino.TipoConta);
+                Console.WriteLine($"Número da conta: {item.ContaDestino.NumConta}");
+                Console.WriteLine($"titular: {item.ContaDestino.Nome}");
+                Console.WriteLine("");
+                Console.WriteLine($"Valor: R${item.Valor}");
+                Console.WriteLine($"Data da transferência: {item.Data}");
+                Console.WriteLine("-----------------------------");
+            }
         }
     }
 }

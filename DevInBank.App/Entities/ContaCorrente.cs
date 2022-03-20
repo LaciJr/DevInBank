@@ -35,11 +35,11 @@ namespace DevInBank.App.Entities
 
         }
 
-        public override void Transferencia(decimal valor, int numContaDestino)
+        public override void Transferencia(decimal valor, int numContaDestino, Conta conta)
         {
             if (VerificaSaldoCheque(valor))
             {
-                base.Transferencia(valor, numContaDestino);
+                base.Transferencia(valor, numContaDestino, conta);
             }
         }
 

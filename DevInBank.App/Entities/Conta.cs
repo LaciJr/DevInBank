@@ -32,7 +32,7 @@ namespace DevInBank.App.Entities
         }
 
         public virtual void Saque(decimal valor)
-        {   
+        {
             saldo -= valor;
             var temp = new Transacao("Saque", valor);
             Extrato.Add(temp);
@@ -63,27 +63,29 @@ namespace DevInBank.App.Entities
             }
         }
 
-        public virtual void Transferencia(decimal valor, int numContaDestino)
+        public virtual void Transferencia(decimal valor, int numContaDestino, Conta contaOrigem)
         {
             var contaDestino = ListaContas.Find(e => e.NumConta == numContaDestino);
-            if (VerificaFinalDeSemana())
-            {
-                Console.WriteLine("Transferência indisponível aos finais de semana.");
-            }
-            else if ((NumConta == contaDestino.NumConta) || contaDestino == null)
-            {
-                Console.WriteLine("Conta destino inválida.");
-            }
-            else
-            {
-                saldo -= valor;
-                contaDestino.saldo += valor;
-                var temp = new Transacao("Transferencia Enviada.", valor);
-                Extrato.Add(temp);
-                temp = new Transacao("Transferencia Recebida.", valor);
-                contaDestino.Extrato.Add(temp);
-                Console.WriteLine("Transferencia efetuada com sucesso.");
-            }
+            //if (VerificaFinalDeSemana())
+            //{
+            //    Console.WriteLine("Transferência indisponível aos finais de semana.");
+            //}
+            //else if (NumConta == contaDestino.NumConta)
+            //{
+            //    Console.WriteLine("Conta destino inválida.");
+            //}
+            //else
+            //{
+            saldo -= valor;
+            contaDestino.saldo += valor;
+            var temp = new Transacao("Transferencia Enviada", valor);
+            Extrato.Add(temp);
+            temp = new Transacao("Transferencia Recebida", valor);
+            contaDestino.Extrato.Add(temp);
+            var tempHistorico = new HistoricoTransferencia("Transferência", valor, contaOrigem, contaDestino);
+            HistoricoTransferencia.ListaHistoricoTransferencia.Add(tempHistorico);
+            Console.WriteLine("Transferencia efetuada com sucesso.");
+            //}
         }
 
         public void AlterarDados(string nome, string endereco, decimal rendaMensal, string agencia)
