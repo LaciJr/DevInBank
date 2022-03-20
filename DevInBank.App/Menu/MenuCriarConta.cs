@@ -19,10 +19,16 @@ namespace DevInBank.App.Menu
             string nome = Console.ReadLine();
             Console.Clear();
 
-            //TEM QUE FAZER A VERIFICAÇÃO
-            Console.WriteLine("Insira o CPF do titular da conta:");
+            Console.WriteLine("Insira o CPF do titular da conta (utilizando apenas números):");
             string cpf = Console.ReadLine();
             Console.Clear();
+            while (!Utilitario.ValidaCPF(cpf))
+            {
+                Console.WriteLine("CPF inserido inválido!");
+                Console.WriteLine("Insira um CPF válido (utilizando apenas números):");
+                cpf = Console.ReadLine();
+                Console.Clear();
+            }
 
             Console.WriteLine("Insira o endereco do titular da conta:");
             string endereco = Console.ReadLine();
