@@ -1,4 +1,5 @@
 ﻿using DevInBank.App.Entities;
+using DevInBank.App.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DevInBank.App.Menu
             while (seletor != "8")
             {
                 Console.WriteLine("Minha Conta Poupança");
-                int i = 0;
+                var i = MenuEnum.i;
                 Console.WriteLine($"{++i}. Saldo");
                 Console.WriteLine($"{++i}. Saque");
                 Console.WriteLine($"{++i}. Depósito");

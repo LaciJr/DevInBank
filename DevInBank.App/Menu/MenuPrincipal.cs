@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevInBank.App.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace DevInBank.App.Menu
             string seletor = "0";
             while (seletor != "4")
             {
-                int i = 0;
+                var i = MenuEnum.i;
                 Console.WriteLine("Menu Principal:");
                 Console.WriteLine($"{++i}. Criar Conta");
                 Console.WriteLine($"{++i}. Minha conta");

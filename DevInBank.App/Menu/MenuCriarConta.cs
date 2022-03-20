@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DevInBank.App;
 using DevInBank.App.Entities;
+using DevInBank.App.Enum;
 
 namespace DevInBank.App.Menu
 {
@@ -73,7 +74,7 @@ namespace DevInBank.App.Menu
 
                 while (tipoInvestimento == "")
                 {
-                    int i = 0;
+                    var i = MenuEnum.i;
                     Console.WriteLine("Selecione o tipo de investimento:");
                     Console.WriteLine($"{++i}. LCI 8% ao ano - Tempo mínimo de aplicação: 6 meses");
                     Console.WriteLine($"{++i}. LCA 9% ao ano - Tempo mínimo de aplicação: 12 meses");

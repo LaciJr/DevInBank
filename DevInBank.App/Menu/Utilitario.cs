@@ -1,4 +1,5 @@
 ﻿using DevInBank.App.Entities;
+using DevInBank.App.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DevInBank.App.Menu
             string seletor;
             while (agencia == "")
             {
-                int i = 0;
+                var i = MenuEnum.i;
                 Console.WriteLine("Selecione a agencia desejada:");
                 Console.WriteLine($"{++i}. para agencia 001 - Florianopolis");
                 Console.WriteLine($"{++i}. para agencia 002 - São José");
@@ -76,7 +77,7 @@ namespace DevInBank.App.Menu
             string conta = "";
             while (conta == "")
             {
-                int i = 0;
+                var i = MenuEnum.i;
                 Console.WriteLine($"{++i}. Conta Corrente");
                 Console.WriteLine($"{++i}. Conta Poupança");
                 Console.WriteLine($"{++i}. Conta Investimento");

@@ -1,4 +1,5 @@
 ﻿using DevInBank.App.Entities;
+using DevInBank.App.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace DevInBank.App.Menu
             string seletor = "0";
             while (seletor != "4")
             {
-                int i = 0;
+                var i = MenuEnum.i;
                 Console.WriteLine("Relatórios:");
                 Console.WriteLine($"{++i}. Listar todas as contas");
                 Console.WriteLine($"{++i}. Histórico de transferências");
