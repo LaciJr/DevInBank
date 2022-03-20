@@ -18,14 +18,14 @@ namespace DevInBank.App.Entities
         {
             Tipo = tipo;
             Valor = valor;
-            Data = DateTime.Now;
+            Data = DataSistema.Data;
         }
 
         public Transacao(string tipo, decimal valor, DateTime dataRetirada, int tempo)
         {
             Tipo = tipo;
             Valor = valor;
-            Data = DateTime.Now;
+            Data = DataSistema.Data;
             DataRetirada = dataRetirada;
             TempoMeses = tempo;
         }

@@ -45,7 +45,7 @@ namespace DevInBank.App.Entities
 
         private bool VerificaSaldoCheque(decimal valor)
         {
-            if (valor > (base.GetSaldo() + ChequeEspecial))
+            if (valor > (base.Saldo + ChequeEspecial))
             {
                 Console.WriteLine("Saldo insuficiente.");
                 return false;

@@ -185,5 +185,18 @@ namespace DevInBank.App.Menu
 
             return tipoConta;
         }
+
+        public static void UpdateSaldos()
+        {
+            foreach (var item in ContaPoupanca.ListaContasPoupanca)
+            {
+                item.Render();
+            }
+
+            foreach (var item in ContaInvestimento.ListaContasInvestimento)
+            {
+                item.RetirarValorAplicado();
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace DevInBank.App.Entities
                 Console.WriteLine("");
                 Console.WriteLine($"Valor: R${item.Valor}");
                 Console.WriteLine($"Data da transferência: {item.Data}");
-                Console.WriteLine("-----------------------------");
+                Console.WriteLine("---------------------------------");
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using DevInBank.App.Enum;
+﻿using DevInBank.App.Entities;
+using DevInBank.App.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace DevInBank.App.Menu
                 Console.WriteLine($"{++i}. Criar Conta");
                 Console.WriteLine($"{++i}. Minha conta");
                 Console.WriteLine($"{++i}. Relatórios");
+                Console.WriteLine($"{++i}. Avançar data do sistema em 36 meses");
                 Console.WriteLine($"{++i}. Encerrar sessão");
 
                 seletor = Console.ReadLine();
@@ -38,6 +40,11 @@ namespace DevInBank.App.Menu
                         MenuRelatorio.Relatorio();
                         break;
                     case "4":
+                        Console.Clear();
+                        DataSistema.SetData();
+                        Utilitario.UpdateSaldos();
+                        break;
+                    case "5":
                         Console.WriteLine("Encerrando aplicação...");
                         Environment.Exit(0);
                         break;

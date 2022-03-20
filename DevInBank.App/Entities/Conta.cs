@@ -14,7 +14,7 @@ namespace DevInBank.App.Entities
         public decimal RendaMensal { get; private set; }
         public int NumConta { get; private set; }
         public string Agencia { get; private set; }
-        private protected decimal saldo { get; set; }
+        protected decimal Saldo { get; set; }
         public string TipoConta { get; internal set; }
         static int GeradorNumConta = 1000;
         public List<Transacao> Extrato = new List<Transacao>();
@@ -29,11 +29,17 @@ namespace DevInBank.App.Entities
             NumConta = GeradorNumConta;
             GeradorNumConta++;
             Agencia = agencia;
+            Saldo = 0;
+        }
+
+        public decimal GetSaldo()
+        {
+            return Saldo;
         }
 
         public virtual void Saque(decimal valor)
         {
-            saldo -= valor;
+            Saldo -= valor;
             var temp = new Transacao("Saque", valor);
             Extrato.Add(temp);
             Console.WriteLine("Saque efetuado com sucesso.");
@@ -41,25 +47,23 @@ namespace DevInBank.App.Entities
 
         public virtual void Deposito(decimal valor)
         {
-            saldo += valor;
+            Saldo += valor;
             var temp = new Transacao("Deposito", valor);
             Extrato.Add(temp);
             Console.WriteLine("Deposito efetuado com sucesso.");
         }
 
-        public decimal GetSaldo()
+        public virtual void GetExtrato()
         {
-            return saldo;
-        }
+            Console.WriteLine("EXTRATO");
+            Console.WriteLine("---------------------------------");
 
-        public void GetExtrato()
-        {
             foreach (var item in Extrato)
             {
                 Console.WriteLine(item.Tipo);
                 Console.WriteLine($"R${item.Valor}");
                 Console.WriteLine(item.Data);
-                Console.WriteLine("---------------");
+                Console.WriteLine("---------------------------------");
             }
         }
 
@@ -76,8 +80,8 @@ namespace DevInBank.App.Entities
             }
             else
             {
-                saldo -= valor;
-            contaDestino.saldo += valor;
+                Saldo -= valor;
+            contaDestino.Saldo += valor;
             var temp = new Transacao("Transferencia Enviada", valor);
             Extrato.Add(temp);
             temp = new Transacao("Transferencia Recebida", valor);
@@ -116,7 +120,7 @@ namespace DevInBank.App.Entities
 
         static bool VerificaFinalDeSemana()
         {
-            var data = DateTime.Now;
+            var data = DataSistema.Data;
             if ((data.DayOfWeek == DayOfWeek.Sunday) || (data.DayOfWeek == DayOfWeek.Saturday))
             {
                 return true;

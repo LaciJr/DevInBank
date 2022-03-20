@@ -30,11 +30,11 @@ namespace DevInBank.App.Entities
         {
             if (ValidaTempoAplicacao(tempoEmMeses))
             {
-                if (base.GetSaldo() >= valor)
+                if (base.Saldo >= valor)
                 {
-                    base.saldo -= valor;
+                    base.Saldo -= valor;
                     ValorAplicado += valor;
-                    var dataRetirada = DateTime.Now;
+                    var dataRetirada = DataSistema.Data;
                     dataRetirada.AddMonths(tempoEmMeses);
                     var temp = new Transacao("Valor aplicado", valor, dataRetirada, tempoEmMeses);
                     base.Extrato.Add(temp);
@@ -47,26 +47,25 @@ namespace DevInBank.App.Entities
             }
             else
             {
-                Console.WriteLine("Tempo não correpondente ao seu tipo de investimento (LCI, LCA, CDB)");
+                Console.WriteLine("Tempo não correspondente ao seu tipo de investimento (LCI, LCA, CDB)");
             }
         }
 
         public void RetirarValorAplicado()
         {
-            var valorAplicado = base.Extrato.FindAll(e => DateTime.Now >= e.DataRetirada);
-            if (valorAplicado != null)
+            var aplicacoes = base.Extrato.FindAll(e => e.Tipo == "Valor aplicado");
+            var aplicacoesDisponiveis = aplicacoes.FindAll(e => DataSistema.Data >= e.DataRetirada);
+            if (aplicacoesDisponiveis != null)
             {
-                foreach (var item in valorAplicado)
+                foreach (var item in aplicacoesDisponiveis)
                 {
                     base.Extrato.Remove(item);
-                    base.saldo += (item.Valor * (decimal)Math.Pow(1 + (Rentabilidade / 12), item.TempoMeses));
+                    base.Saldo += (item.Valor * (decimal)Math.Pow(1 + (Rentabilidade / 12), item.TempoMeses));
+                    ValorAplicado -= item.Valor;
                     var temp = new Transacao("Aplicação retirada", item.Valor);
                     base.Extrato.Add(temp);
+                    
                 }
-            }
-            else
-            {
-                Console.WriteLine("Nenhuma aplicação disponível para retirada");
             }
         }
 
@@ -91,7 +90,7 @@ namespace DevInBank.App.Entities
 
         public override void Saque(decimal valor)
         {
-            if (base.GetSaldo() >= valor)
+            if (base.Saldo >= valor)
             {
                 base.Saque(valor);
             }
@@ -103,7 +102,7 @@ namespace DevInBank.App.Entities
 
         public override void Transferencia(decimal valor, int numContaDestino, Conta conta)
         {
-            if (base.GetSaldo() >= valor)
+            if (base.Saldo >= valor)
             {
                 base.Transferencia(valor, numContaDestino, conta);
             }
