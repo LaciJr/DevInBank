@@ -63,7 +63,7 @@ namespace DevInBank.App.Entities
                     var valorRetirado = Math.Round((item.Valor * (decimal)Math.Pow(1 + (Rentabilidade / 12), item.TempoMeses)), 2);
                     base.Saldo += valorRetirado;
                     ValorAplicado -= item.Valor;
-                    var temp = new Transacao("Aplicação retirada", valorRetirado);
+                    var temp = new Transacao("Aplicação retirada.", valorRetirado);
                     base.Extrato.Add(temp);
                     
                 }
